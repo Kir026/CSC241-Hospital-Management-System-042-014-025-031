@@ -1,0 +1,14 @@
+digraph UML {
+  graph [rankdir=TB, bgcolor="white", nodesep=0.6, ranksep=0.7, pad=0.2];
+  node [shape=record, fontname="DejaVu Sans", fontsize=13, margin="0.16,0.12", color="#303030"];
+  edge [fontname="DejaVu Sans", fontsize=11, color="#303030", arrowsize=1.0, labeldistance=2.5, labelangle=30];
+  Person [label="{Person (abstract)|- id : int\l- name : string\l|+ Person(id, name)\l+ virtual ~Person()\l+ getId() : int\l+ getName() : const string&\l+ setName(value) : void\l+ display(out) : void = 0\l}"];
+  Patient [label="{Patient|- age : int\l- records : vector\<MedicalRecord\>\l|+ Patient(id, name, age)\l+ setAge(value) : void\l+ addRecord(record) : void\l+ display(out) : void [override]\l+ displayRecords(out) : void\l}"];
+  Doctor [label="{Doctor|- specialization : string\l- available : bool\l|+ Doctor(id, name, specialization)\l+ isAvailable() : bool\l+ setAvailable(value) : void\l+ display(out) : void [override]\l}"];
+  MedicalRecord [label="{MedicalRecord|- recordId : int\l- doctorId : int\l- diagnosis : string\l- prescription : string\l|+ MedicalRecord(id, doctorId,\l  diagnosis, prescription)\l+ getId() : int\l+ getDoctorId() : int\l+ display(out) : void\l}"];
+  Person -> Patient [dir=back, arrowtail=empty];
+  Person -> Doctor [dir=back, arrowtail=empty];
+  {rank=same; Patient; Doctor;}
+  Patient -> MedicalRecord [dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="0..*", label=" owns"];
+  Doctor -> MedicalRecord [dir=none, taillabel="1", headlabel="0..*", label=" identified by doctorId"];
+}
