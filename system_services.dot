@@ -1,0 +1,19 @@
+digraph UML {
+  graph [rankdir=TB, bgcolor="white", nodesep=0.55, ranksep=0.75, pad=0.2];
+  node [shape=record, fontname="DejaVu Sans", fontsize=13, margin="0.16,0.12", color="#303030"];
+  edge [fontname="DejaVu Sans", fontsize=11, color="#303030", arrowsize=0.9, labeldistance=2.5, labelangle=30];
+  HospitalSystem [label="{HospitalSystem|- patients : vector\<Patient\>\l- doctors : vector\<Doctor\>\l- appointments : vector\<Appointment\>\l- bills : vector\<Bill\>\l|+ addPatient(patient) : void\l+ addDoctor(doctor) : void\l+ getPatient(id) : const Patient&\l+ getDoctor(id) : const Doctor&\l+ addMedicalRecord(patientId, record) : void\l+ bookAppointment(appointment) : void\l+ cancelAppointment(id) : void\l+ addBill(bill) : void\l+ payBill(id) : void\l+ displayAll(out) : void\l+ saveSummary(path) : void\l- findPatient(id) : Patient&\l}"];
+  Appointment [label="{Appointment|- appointmentId : int\l- patientId : int\l- doctorId : int\l- slot : string\l- cancelled : bool\l|+ Appointment(id, patientId,\l  doctorId, slot)\l+ isCancelled() : bool\l+ cancel() : void\l+ display(out) : void\l}"];
+  Bill [label="{Bill|- billId : int\l- patientId : int\l- consultationFee : double\l- serviceCharges : double\l- paid : bool\l|+ Bill(id, patientId, fee, charges)\l+ calculateTotal() : double\l+ markPaid() : void\l+ display(out) : void\l}"];
+  Patient [label="Patient\n(details in Figure 1)"];
+  Doctor [label="Doctor\n(details in Figure 1)"];
+  HospitalSystem -> Appointment [dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="0..*", label=" owns"];
+  HospitalSystem -> Bill [dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="0..*", label=" owns"];
+  HospitalSystem -> Patient [dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="0..*", style=solid];
+  HospitalSystem -> Doctor [dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="0..*", style=solid];
+  Appointment -> Patient [dir=none, taillabel="0..*", headlabel="1", label=" patientId"];
+  Appointment -> Doctor [dir=none, taillabel="0..*", headlabel="1", label=" doctorId"];
+  Bill -> Patient [dir=none, taillabel="0..*", headlabel="1", label=" patientId"];
+  {rank=same; Appointment; Bill;}
+  {rank=same; Patient; Doctor;}
+}
